@@ -11,6 +11,11 @@ main {
 
 .article {
     background-color: #ffffff;
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: 16px;
+
+    position: relative;
 }
 
 .label {
@@ -26,6 +31,7 @@ main {
 .input input {
     width: 65%;
     padding: 10px;
+    margin-top: 16px;
     margin-left: 1rem;
     margin-right: 1rem;
     background: #F2F7F5;
@@ -40,5 +46,37 @@ main {
     border: none;
     padding: 10px;
 }
+.like, .dislike {
+    background-color: #FAAE2C;
+    border-radius: 50%;
+    border: none
+ }
+
+.up, .down {
+     color: pink;
+     font-size: 25px;
+     margin-right: 20px;
+     margin-left: 20px;
+ } 
+
+ .delete {
+     background-color: white;
+     border: none;
+
+     position: absolute;
+     top: 0;
+     right: 0;
+ }
+
+ .archive {
+     background-color: white;
+     border: none;
+     font-size: 25px;
+
+     position: absolute;
+     top: 0;
+     right: 0;
+ }
+
 
 /*# sourceMappingURL=/react-tea-time-topic.e31bb0bc.css.map */

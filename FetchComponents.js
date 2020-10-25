@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import dislike from "./icons/thumb_down.svg";
-import like from "./icons/thumb_up.svg";
-import archive from "./icons/archive.svg";
-import "./index.css"
+import InputAddComponents from "./InputAddComponents";
+import NextTopic from "./NextTopic";
+import PastTopic from "./PastTopic";
+import "./index.css";
 
 const endpoints =
   "https://gist.githubusercontent.com/Pinois/93afbc4a061352a0c70331ca4a16bb99/raw/6da767327041de13693181c2cb09459b0a3657a1/topics.json";
 
-function FetchComponents({ newTopic }) {
+function FetchComponents() {
   const [topics, setTopics] = useState([]);
 
   useEffect(() => {
@@ -19,50 +19,43 @@ function FetchComponents({ newTopic }) {
     fetchTopics();
   }, []);
 
+  const sortedByLikes = topics.sort((a, b) => {
+    const topicA = a.upvotes - a.downvotes;
+    const topicB = b.upvotes - b.downvotes;
+    return topicB - topicA;
+  });
+
   return (
     <div>
-      <div className="section">
-        <h3>Next Topics</h3>
-        {topics.map((topic) => {
-          if (topic.iscussedOn !== "") {
-            return (
-              <div key={topic.id}  className="article">
-                <p>{topic.title}</p>
-                <div className="likeBtns">
-                  <button>
-                    <img src={like} />
-                    {topic.upvotes}
-                  </button>
-                  <button>
-                    <img src={dislike} />
-                    {topic.downvotes}
-                  </button>
-                  <button>
-                    <img src={archive} />
-                  </button>
-                </div>
-                <div>{newTopic}</div>
-              </div>
-            );
-          }
+      <InputAddComponents topics={topics} setTopics={setTopics} />
+
+      <h3>Next Topics</h3>
+      {sortedByLikes
+        .filter((topic) => topic.discussedOn === "")
+        .map((topic) => {
+          return (
+            <NextTopic
+              key={topic.id}
+              setTopics={setTopics}
+              topics={topics}
+              topic={topic}
+            />
+          );
         })}
-      </div>
       <div>
         <h3>Past Topics</h3>
-        {topics.map((topic) => {
-          if (topic.iscussedOn === "") {
+        {sortedByLikes
+          .filter((topic) => topic.discussedOn)
+          .map((topic) => {
             return (
-              <div key={topic.id}>
-                <p>{topics.title}</p>
-                <div>
-                  <button>{topic.upVotes}</button>
-                  <button>{topic.downVotes}</button>
-                </div>
-                <div>{newTopic}</div>
-              </div>
+              <PastTopic
+                key={topic.id}
+                topics={topics}
+                setTopics={setTopics}
+                topic={topic}
+              />
             );
-          }
-        })}
+          })}
       </div>
     </div>
   );

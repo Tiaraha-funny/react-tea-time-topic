@@ -29772,13 +29772,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"icons/thumb_down.svg":[function(require,module,exports) {
-module.exports = "/thumb_down.0b6bf81d.svg";
-},{}],"icons/thumb_up.svg":[function(require,module,exports) {
-module.exports = "/thumb_up.d327720e.svg";
-},{}],"icons/archive.svg":[function(require,module,exports) {
-module.exports = "/archive.2f7c54b1.svg";
-},{}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -29850,7 +29844,62 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"FetchComponents.js":[function(require,module,exports) {
+},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"InputAddComponents.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./index.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function InputAddComponents({
+  topics,
+  setTopics
+}) {
+  const handleAddSubmit = e => {
+    e.preventDefault();
+    console.log("I am submitted");
+    const [name] = e.target;
+    const newTopic = {
+      upvotes: 0,
+      downvotes: 0,
+      disussedOn: "",
+      title: name.value,
+      id: Date.now()
+    };
+    topics.push(newTopic);
+    console.log(newTopic);
+    setTopics([...topics]);
+    console.log(topics);
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "input"
+  }, /*#__PURE__*/_react.default.createElement("h3", null, "Add a Topic"), /*#__PURE__*/_react.default.createElement("div", {
+    className: "label"
+  }, /*#__PURE__*/_react.default.createElement("form", {
+    onSubmit: handleAddSubmit
+  }, /*#__PURE__*/_react.default.createElement("input", {
+    name: "name",
+    placeholder: "write your topic idea..."
+  }), /*#__PURE__*/_react.default.createElement("button", null, "Submit"))));
+}
+
+var _default = InputAddComponents;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","./index.css":"index.css"}],"icons/thumb_up.svg":[function(require,module,exports) {
+module.exports = "/thumb_up.d327720e.svg";
+},{}],"icons/thumb_down.svg":[function(require,module,exports) {
+module.exports = "/thumb_down.0b6bf81d.svg";
+},{}],"icons/archive.svg":[function(require,module,exports) {
+module.exports = "/archive.2f7c54b1.svg";
+},{}],"NextTopic.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29860,11 +29909,124 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _thumb_down = _interopRequireDefault(require("./icons/thumb_down.svg"));
-
 var _thumb_up = _interopRequireDefault(require("./icons/thumb_up.svg"));
 
+var _thumb_down = _interopRequireDefault(require("./icons/thumb_down.svg"));
+
 var _archive = _interopRequireDefault(require("./icons/archive.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function NextTopic(props) {
+  const [count, setCount] = (0, _react.useState)(0);
+
+  const increament = id => {
+    console.log("increase it");
+    const topicToUpvote = props.topics.find(topic => topic.id === id);
+    const countUpVotes = topicToUpvote.upvotes++;
+    setCount(countUpVotes);
+  };
+
+  const decreament = id => {
+    console.log("decrease it");
+    const topicToDownvote = props.topics.find(topic => topic.id === id);
+    const countDownVotes = topicToDownvote.downvotes--;
+    setCount(countDownVotes);
+  };
+
+  const handleArchive = id => {
+    const topicToArchive = props.topics.find(topic => topic.id === id);
+    topicToArchive.discussedOn = Date.now();
+    props.setTopics([...props.topics]);
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "section"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    key: props.topic.id,
+    className: "article"
+  }, /*#__PURE__*/_react.default.createElement("p", null, props.topic.title), /*#__PURE__*/_react.default.createElement("div", {
+    className: "likeBtns"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    className: "like",
+    onClick: () => increament(props.topic.id)
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: _thumb_down.default
+  })), /*#__PURE__*/_react.default.createElement("b", {
+    className: "up"
+  }, props.topic.upvotes), /*#__PURE__*/_react.default.createElement("button", {
+    className: "dislike",
+    onClick: () => decreament(props.topic.id)
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: _thumb_up.default
+  })), /*#__PURE__*/_react.default.createElement("b", {
+    className: "down"
+  }, props.topic.downvotes), /*#__PURE__*/_react.default.createElement("button", {
+    className: "archive",
+    onClick: () => handleArchive(props.topic.id)
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: _archive.default
+  })))));
+}
+
+var _default = NextTopic;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","./icons/thumb_up.svg":"icons/thumb_up.svg","./icons/thumb_down.svg":"icons/thumb_down.svg","./icons/archive.svg":"icons/archive.svg"}],"icons/trash.svg":[function(require,module,exports) {
+module.exports = "/trash.e2762dec.svg";
+},{}],"PastTopic.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _trash = _interopRequireDefault(require("./icons/trash.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function PastTopic(props) {
+  const handleDeleteTopic = id => {
+    console.log("I want to delete this");
+    let filtering = props.topics.filter(topic => topic.id !== id);
+    props.setTopics(filtering);
+  };
+
+  const discussedOnDate = new Date(Number(props.topic.discussedOn));
+  return /*#__PURE__*/_react.default.createElement("div", {
+    key: props.topic.id,
+    className: "article"
+  }, /*#__PURE__*/_react.default.createElement("p", null, props.topic.title), /*#__PURE__*/_react.default.createElement("div", null, "Discussed on ", discussedOnDate.toLocaleDateString()), /*#__PURE__*/_react.default.createElement("button", {
+    className: "delete",
+    onClick: () => handleDeleteTopic(props.topic.id)
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: _trash.default
+  })));
+}
+
+var _default = PastTopic;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","./icons/trash.svg":"icons/trash.svg"}],"FetchComponents.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _InputAddComponents = _interopRequireDefault(require("./InputAddComponents"));
+
+var _NextTopic = _interopRequireDefault(require("./NextTopic"));
+
+var _PastTopic = _interopRequireDefault(require("./PastTopic"));
 
 require("./index.css");
 
@@ -29876,9 +30038,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 const endpoints = "https://gist.githubusercontent.com/Pinois/93afbc4a061352a0c70331ca4a16bb99/raw/6da767327041de13693181c2cb09459b0a3657a1/topics.json";
 
-function FetchComponents({
-  newTopic
-}) {
+function FetchComponents() {
   const [topics, setTopics] = (0, _react.useState)([]);
   (0, _react.useEffect)(() => {
     async function fetchTopics() {
@@ -29889,70 +30049,34 @@ function FetchComponents({
 
     fetchTopics();
   }, []);
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
-    className: "section"
-  }, /*#__PURE__*/_react.default.createElement("h3", null, "Next Topics"), topics.map(topic => {
-    if (topic.iscussedOn !== "") {
-      return /*#__PURE__*/_react.default.createElement("div", {
-        key: topic.id,
-        className: "article"
-      }, /*#__PURE__*/_react.default.createElement("p", null, topic.title), /*#__PURE__*/_react.default.createElement("div", {
-        className: "likeBtns"
-      }, /*#__PURE__*/_react.default.createElement("button", null, /*#__PURE__*/_react.default.createElement("img", {
-        src: _thumb_up.default
-      }), topic.upvotes), /*#__PURE__*/_react.default.createElement("button", null, /*#__PURE__*/_react.default.createElement("img", {
-        src: _thumb_down.default
-      }), topic.downvotes), /*#__PURE__*/_react.default.createElement("button", null, /*#__PURE__*/_react.default.createElement("img", {
-        src: _archive.default
-      }))), /*#__PURE__*/_react.default.createElement("div", null, newTopic));
-    }
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Past Topics"), topics.map(topic => {
-    if (topic.iscussedOn === "") {
-      return /*#__PURE__*/_react.default.createElement("div", {
-        key: topic.id
-      }, /*#__PURE__*/_react.default.createElement("p", null, topics.title), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", null, topic.upVotes), /*#__PURE__*/_react.default.createElement("button", null, topic.downVotes)), /*#__PURE__*/_react.default.createElement("div", null, newTopic));
-    }
+  const sortedByLikes = topics.sort((a, b) => {
+    const topicA = a.upvotes - a.downvotes;
+    const topicB = b.upvotes - b.downvotes;
+    return topicB - topicA;
+  });
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_InputAddComponents.default, {
+    topics: topics,
+    setTopics: setTopics
+  }), /*#__PURE__*/_react.default.createElement("h3", null, "Next Topics"), sortedByLikes.filter(topic => topic.discussedOn === "").map(topic => {
+    return /*#__PURE__*/_react.default.createElement(_NextTopic.default, {
+      key: topic.id,
+      setTopics: setTopics,
+      topics: topics,
+      topic: topic
+    });
+  }), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Past Topics"), sortedByLikes.filter(topic => topic.discussedOn).map(topic => {
+    return /*#__PURE__*/_react.default.createElement(_PastTopic.default, {
+      key: topic.id,
+      topics: topics,
+      setTopics: setTopics,
+      topic: topic
+    });
   })));
 }
 
 var _default = FetchComponents;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","./icons/thumb_down.svg":"icons/thumb_down.svg","./icons/thumb_up.svg":"icons/thumb_up.svg","./icons/archive.svg":"icons/archive.svg","./index.css":"index.css"}],"InputAddComponents.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-require("./index.css");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function InputAddComponents() {
-  const [newTopic, setNewTopic] = (0, _react.useState)("");
-  return /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("h3", null, "Add a Topic"), /*#__PURE__*/_react.default.createElement("div", {
-    className: "label"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "input"
-  }, /*#__PURE__*/_react.default.createElement("input", {
-    type: "text",
-    name: "text",
-    value: newTopic,
-    placeholder: "write your topic idea here...",
-    onChange: e => setNewTopic(e.target.value)
-  }), /*#__PURE__*/_react.default.createElement("button", {
-    type: "submit"
-  }, "Submit"))));
-}
-
-var _default = InputAddComponents;
-exports.default = _default;
-},{"react":"node_modules/react/index.js","./index.css":"index.css"}],"App.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./InputAddComponents":"InputAddComponents.js","./NextTopic":"NextTopic.js","./PastTopic":"PastTopic.js","./index.css":"index.css"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29964,19 +30088,17 @@ var _react = _interopRequireDefault(require("react"));
 
 var _FetchComponents = _interopRequireDefault(require("./FetchComponents"));
 
-var _InputAddComponents = _interopRequireDefault(require("./InputAddComponents"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function App() {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "main"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, "Tea Time Topic"), /*#__PURE__*/_react.default.createElement(_InputAddComponents.default, null), /*#__PURE__*/_react.default.createElement(_FetchComponents.default, null));
+  }, /*#__PURE__*/_react.default.createElement("h1", null, "Tea Time Topic"), /*#__PURE__*/_react.default.createElement(_FetchComponents.default, null));
 }
 
 var _default = App;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","./FetchComponents":"FetchComponents.js","./InputAddComponents":"InputAddComponents.js"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./FetchComponents":"FetchComponents.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -30016,7 +30138,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62423" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58565" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -30193,4 +30315,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/react-tea-time-topic.e31bb0bc.js.map
+//# sourceMappingURL=/react-tea-time-topic.e31bb0bc.js.mapeMappingURL=/react-tea-time-topic.e31bb0bc.js.map
