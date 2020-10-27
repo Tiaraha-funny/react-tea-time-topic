@@ -1,25 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 
 function InputAddComponents({ topics, setTopics }) {
 
+  const [newtopics, setNewTopics] = useState({
+    upvotes: 0,
+    downvotes: 0,
+    disussedOn: "",
+    title: name.value,
+    id: Date.now(),
+  });
+
+  const handleInput = (e) => {
+    console.log(e.target.value);
+    console.log(name);
+    setNewTopics({ ...newtopics, [e.target.name]: e.target.value });
+  };
+
   const handleAddSubmit = (e) => {
     e.preventDefault();
-    console.log("I am submitted");
-    const [ name ] = e.target;
-
-    const newTopic = {
-      upvotes: 0,
-      downvotes: 0,
-      disussedOn: "",
-      title: name.value,
-      id: Date.now(),
-    };
-
-    topics.push(newTopic);
-    console.log(newTopic);
-    setTopics([...topics]);
-    console.log(topics);
+    e.target.reset();
+    console.log(newtopics);
+    topics.push(newtopics);
+    setTopics([...topics, newtopics]);
   };
 
   return (
@@ -27,8 +30,12 @@ function InputAddComponents({ topics, setTopics }) {
       <h3>Add a Topic</h3>
       <div className="label">
         <form onSubmit={handleAddSubmit}>
-          <input name="name" placeholder="write your topic idea..."/>
-          <button>Submit</button>
+          <input
+            name="title"
+            onChange={handleInput}
+            placeholder="write your topic idea..."
+          />
+          <button type="submit">Submit</button>
         </form>
       </div>
     </div>

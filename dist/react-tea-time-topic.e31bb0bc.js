@@ -29852,31 +29852,40 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 require("./index.css");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function InputAddComponents({
   topics,
   setTopics
 }) {
+  const [newtopics, setNewTopics] = (0, _react.useState)({
+    upvotes: 0,
+    downvotes: 0,
+    disussedOn: "",
+    title: name.value,
+    id: Date.now()
+  });
+
+  const handleInput = e => {
+    console.log(e.target.value);
+    console.log(name);
+    setNewTopics({ ...newtopics,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const handleAddSubmit = e => {
     e.preventDefault();
-    console.log("I am submitted");
-    const [name] = e.target;
-    const newTopic = {
-      upvotes: 0,
-      downvotes: 0,
-      disussedOn: "",
-      title: name.value,
-      id: Date.now()
-    };
-    topics.push(newTopic);
-    console.log(newTopic);
-    setTopics([...topics]);
-    console.log(topics);
+    e.target.reset();
+    console.log(newtopics);
+    topics.push(newtopics);
+    setTopics([...topics, newtopics]);
   };
 
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -29886,9 +29895,12 @@ function InputAddComponents({
   }, /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: handleAddSubmit
   }, /*#__PURE__*/_react.default.createElement("input", {
-    name: "name",
+    name: "title",
+    onChange: handleInput,
     placeholder: "write your topic idea..."
-  }), /*#__PURE__*/_react.default.createElement("button", null, "Submit"))));
+  }), /*#__PURE__*/_react.default.createElement("button", {
+    type: "submit"
+  }, "Submit"))));
 }
 
 var _default = InputAddComponents;
@@ -30138,7 +30150,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58565" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59644" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -30315,4 +30327,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/react-tea-time-topic.e31bb0bc.js.mapeMappingURL=/react-tea-time-topic.e31bb0bc.js.map
+//# sourceMappingURL=/react-tea-time-topic.e31bb0bc.js.map
